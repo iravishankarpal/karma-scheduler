@@ -1,11 +1,11 @@
-import { julian, moonposition } from "astronomia";
+import { moonposition, julian } from "astronomia";
 
 export function getMoonLongitude(date: Date): number {
-    const y = date.getUTCFullYear();
-    const m = date.getUTCMonth() + 1;
-    const D = date.getUTCDate() + (date.getUTCHours() + date.getUTCMinutes() / 60 + date.getUTCSeconds() / 3600) / 24;
-    const jd = julian.CalendarGregorianToJD(y, m, D);
-
-    const moonLon = moonposition.position(jd).lon;
-    return moonLon; // In degrees
+    const jd = julian.CalendarGregorianToJD(
+        date.getUTCFullYear(),
+        date.getUTCMonth() + 1,
+        date.getUTCDate() + (date.getUTCHours() + date.getUTCMinutes() / 60 + date.getUTCSeconds() / 3600) / 24
+    );
+    const moon = moonposition.position(jd);
+    return moon.lon;
 }
