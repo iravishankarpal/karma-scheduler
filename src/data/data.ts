@@ -287,6 +287,7 @@ let data = {
                     Saturday: ["Sleep", "Death", "Eat", "Walk", "Rule"],
                 },
                 Night_time: {
+                    Sunday: ["Eat", "Rule", "Death", "Walk", "Sleep"],
                     Monday: ["Rule", "Death", "Walk", "Sleep", "Eat"],
                     Tuesday: ["Eat", "Rule", "Death", "Walk", "Sleep"],
                     Wednesday: ["Rule", "Death", "Walk", "Sleep", "Eat"],

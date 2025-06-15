@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import { useBirdActions, useBirdHydration, useBirdsInfo } from "@/store/useSchedulerStore";
-
-const birdOptions = ["Crow", "Vulture", "Owl", "Peacock", "Cock"];
+import { birdsArray } from "@/schema/names";
 
 export default function BirdFormProvider() {
     let hasHydrated = useBirdHydration();
@@ -17,11 +16,11 @@ export default function BirdFormProvider() {
 }
 
 export function BirdForm() {
-    const { date, bird } = useBirdsInfo();
+    const { date, bird, paksha } = useBirdsInfo();
     const { setDate, setBird } = useBirdActions();
 
     return (
-        <div className="space-y-4 max-w-sm mx-auto">
+        <div className="space-y-4 flex gap-0.5 max-w-sm mx-auto">
             {/* Date Picker */}
             <div className="flex flex-col space-y-2">
                 <label className="text-sm font-medium">Select Date</label>
@@ -45,13 +44,18 @@ export function BirdForm() {
                         <SelectValue placeholder="Select bird" />
                     </SelectTrigger>
                     <SelectContent>
-                        {birdOptions.map((b) => (
+                        {birdsArray.map((b) => (
                             <SelectItem key={b} value={b}>
                                 {b}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </Select>
+            </div>
+
+            {/* Paksha Select */}
+            <div className="flex flex-col space-y-2">
+                <label className="text-sm font-medium">{paksha}</label>
             </div>
         </div>
     );

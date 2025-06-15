@@ -1,21 +1,17 @@
 import { z } from "zod";
-import { BirdSchema, DaySchema, NakshatraSchema } from "./names";
+import { ActivitySchema, BirdSchema, DaySchema, NakshatraSchema } from "./names";
 
-// Reusable Enums
-
-// Helper schema
-
-let arrayOfBirds = z.array(BirdSchema);
-let arrayOfDays = z.array(DaySchema);
-
+let arrayOfBirds = z.array(BirdSchema).nonempty();
+let arrayOfDays = z.array(DaySchema).nonempty();
+let arrayOfActions = z.array(ActivitySchema).nonempty();
 const dayTimeSchema = z.object({
-    Sunday: arrayOfBirds,
-    Monday: arrayOfBirds,
-    Tuesday: arrayOfBirds,
-    Wednesday: arrayOfBirds,
-    Thursday: arrayOfBirds,
-    Friday: arrayOfBirds,
-    Saturday: arrayOfBirds,
+    Sunday: arrayOfActions,
+    Monday: arrayOfActions,
+    Tuesday: arrayOfActions,
+    Wednesday: arrayOfActions,
+    Thursday: arrayOfActions,
+    Friday: arrayOfActions,
+    Saturday: arrayOfActions,
 });
 
 const pakshaActivitySchema = z.object({

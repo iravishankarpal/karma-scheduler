@@ -67,6 +67,7 @@ export let useBirdsInfo = () =>
         useShallow((state) => ({
             date: state.date,
             bird: state.bird,
+            paksha: state.paksha,
         }))
     );
 
