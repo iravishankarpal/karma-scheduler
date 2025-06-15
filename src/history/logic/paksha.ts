@@ -1,4 +1,4 @@
-import { PakshaStatus } from "@/constants/common";
+import { PakshaStatus } from "@/schema/names";
 import { julian, moonposition, solar } from "astronomia";
 
 function toJulianDay(date: Date): number {

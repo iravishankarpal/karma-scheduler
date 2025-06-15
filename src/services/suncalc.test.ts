@@ -27,4 +27,10 @@ describe("getMoonPhase", () => {
         const result = getMoonPhase(date);
         expect(result).toBe("Waning");
     });
+    it("should return same data Krishna", () => {
+        // const date = new Date("2025-06-14T12:00:00+05:30"); // Noon IST
+        const date = new Date("2020-03-22T17:10:00+05:30"); // Noon IST
+        const result = getMoonPhase(date);
+        expect(result).toBe("Waning");
+    });
 });

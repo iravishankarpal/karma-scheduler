@@ -5,22 +5,23 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { StateCreator } from "zustand";
 import type { PersistOptions } from "zustand/middleware";
-import { getPakshaStatus } from "@/history/logic/paksha";
+import { BirdSchema, names, tBird, tPakshaStatus } from "@/schema/names";
+import { getPakshaStatus } from "@/services/suncalc";
 // const myMiddlewares = (f) => devtools(persist(immer(f), { name: "reference" }));
 interface State {
     hasHydrated: boolean;
     date: Date;
-    bird: string;
-    paksha: string | null;
-    result: string | null;
+    bird: tBird;
+    paksha: tPakshaStatus;
     setDate: (d: Date) => void;
     setBird: (b: string) => void;
-    setResult: (r: string) => void;
 }
 
 // 🧠 Step 1: type for middleware combo
 type MyState = State;
 type MiddlewareStack = [["zustand/immer", never], ["zustand/devtools", never], ["zustand/persist", Partial<PersistOptions<MyState>>]];
+
+// type MiddlewareStack = [["zustand/immer", never], ["zustand/devtools", Partial<MyState>]];
 
 // 🧩 Step 2: Typed custom middleware
 const withMiddlewares = (f: StateCreator<MyState, MiddlewareStack>) =>
@@ -28,7 +29,7 @@ const withMiddlewares = (f: StateCreator<MyState, MiddlewareStack>) =>
         // @ts-expect-error
         persist(immer(f), {
             name: "scheduler", // for localStorage key
-            onRehydrateStorage: () => (state) => {
+            onRehydrateStorage: () => (state: MyState) => {
                 console.log("✅ Zustand rehydrated!", state);
                 if (state) {
                     state.hasHydrated = true;
@@ -43,26 +44,19 @@ export const useSchedulerStore = create<MyState>()(
     withMiddlewares((set) => ({
         hasHydrated: false,
         date: new Date(),
-        bird: "Crow",
-        paksha: null,
-        result: null,
+        bird: names.birds.Crow,
+        paksha: names.paksha.Krishnapaksha,
         setDate: (date) => {
-            console.log(date);
-            let result = getPakshaStatus(date);
             set((state) => {
                 state.date = date;
-                state.paksha = result;
+                state.paksha = getPakshaStatus(date);
             });
         },
         setBird: (b) => {
             set((state) => {
-                state.bird = b;
+                state.bird = BirdSchema.parse(b);
             });
         },
-        setResult: (r) =>
-            set((state) => {
-                state.result = r;
-            }),
     }))
 );
 
