@@ -5,7 +5,7 @@ import { devtools, persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { StateCreator } from "zustand";
 import type { PersistOptions } from "zustand/middleware";
-import { getPakshaStatus } from "@/logic/paksha";
+import { getPakshaStatus } from "@/history/logic/paksha";
 // const myMiddlewares = (f) => devtools(persist(immer(f), { name: "reference" }));
 interface State {
     hasHydrated: boolean;
