@@ -27,10 +27,12 @@
         "Shravana",
         "Shukla",
         "Suklapaksha",
+        "suncalc",
         "Swati",
         "Uttarabhadra",
         "Uttaraphalguni",
         "Uttarashada",
         "Vishakha"
-    ]
+    ],
+    "fetch-client.workspacePath": "c:\\Users\\iravi\\OneDrive\\Desktop\\project\\karma-scheduler\\fetch-client"
 }

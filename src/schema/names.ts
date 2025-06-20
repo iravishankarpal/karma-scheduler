@@ -43,7 +43,6 @@ export const NakshatraSchema = z.enum([
 export type tNakshatra = z.infer<typeof NakshatraSchema>;
 
 export const ActivitiesArray = ["Sleep", "Death", "Rule", "Eat", "Walk"] as const;
-
 export const ActivitySchema = z.enum(ActivitiesArray);
 export type tActivity = z.infer<typeof ActivitySchema>;
 
