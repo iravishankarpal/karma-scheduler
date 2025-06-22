@@ -7,6 +7,10 @@ export const daysArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"
 export const DaySchema = z.enum(daysArray);
 export type tDay = z.infer<typeof DaySchema>;
 
+export const dayNightArray = ["Day", "Night"] as const;
+export const DayNightSchema = z.enum(dayNightArray);
+export type tDayNight = z.infer<typeof DayNightSchema>;
+
 export const pakshaArray = ["Suklapaksha", "Krishnapaksha"] as const;
 export const PakshaSchema = z.enum(pakshaArray);
 export type tPakshaStatus = z.infer<typeof PakshaSchema>;

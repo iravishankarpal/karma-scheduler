@@ -8,6 +8,10 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { cn } from "@/lib/utils";
 import { useBirdActions, useBirdHydration, useBirdsInfo } from "@/store/useSchedulerStore";
 import { birdsArray } from "@/schema/names";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { getCurrentPakshiActivity } from "@/logic/time/currentActivity";
+import BirdCurrentActivity from "./birdCurrentActivity";
 
 export default function BirdFormProvider() {
     let hasHydrated = useBirdHydration();
@@ -16,24 +20,40 @@ export default function BirdFormProvider() {
 }
 
 export function BirdForm() {
-    const { date, bird, paksha } = useBirdsInfo();
-    const { setDate, setBird } = useBirdActions();
+    const { date, bird, paksha, sunrise, sunset } = useBirdsInfo();
+    const { setDate, setBird, setSunrise, setSunset } = useBirdActions();
 
     return (
-        <div className="space-y-4 flex gap-0.5 max-w-sm mx-auto">
+        <div className="space-y-4 flex-1/5 flex gap-2  mx-auto">
             {/* Date Picker */}
             <div className="flex flex-col space-y-2">
-                <label className="text-sm font-medium">Select Date</label>
+                <label className="text-sm font-medium">
+                    Select Date <span className="text-xs">({paksha})</span>{" "}
+                </label>
                 <Popover>
                     <PopoverTrigger asChild>
                         <Button variant="outline" className={cn("w-full justify-start text-left")}>
-                            {format(date, "PPP")}
+                            {format(date, "EEEE, PPP")}
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">
                         <Calendar mode="single" selected={date} onSelect={(d) => d && setDate(d)} />
                     </PopoverContent>
                 </Popover>
+            </div>
+
+            <div className="flex flex-col space-y-2">
+                <Label htmlFor="sunrise" className="text-sm font-medium">
+                    Set Sunrise
+                </Label>
+                <Input id="sunrise" onChange={(e) => setSunrise(e.target.value)} type="time" defaultValue={sunrise} className="w-full" />
+            </div>
+            {/* Sunset */}
+            <div className="flex flex-col space-y-2">
+                <Label htmlFor="sunset" className="text-sm font-medium">
+                    Set Sunset
+                </Label>
+                <Input id="sunset" type="time" onChange={(e) => setSunset(e.target.value)} defaultValue={sunset} className="w-full" />
             </div>
 
             {/* Bird Select */}
@@ -53,9 +73,9 @@ export function BirdForm() {
                 </Select>
             </div>
 
-            {/* Paksha Select */}
-            <div className="flex flex-col space-y-2">
-                <label className="text-sm font-medium">{paksha}</label>
+            <div className="flex flex-col space-y-2  ">
+                <label className="text-sm font-medium">Current Activity</label>
+                <BirdCurrentActivity />
             </div>
         </div>
     );

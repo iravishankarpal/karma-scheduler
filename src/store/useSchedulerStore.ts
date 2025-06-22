@@ -13,8 +13,12 @@ interface State {
     date: Date;
     bird: tBird;
     paksha: tPakshaStatus;
+    sunrise: string; // e.g. "06:00"
+    sunset: string; // e.g. "18:00"
     setDate: (d: Date) => void;
     setBird: (b: string) => void;
+    setSunrise: (time: string) => void; // e.g. "06:00"
+    setSunset: (time: string) => void; // e.g. "18
 }
 
 // 🧠 Step 1: type for middleware combo
@@ -46,6 +50,9 @@ export const useSchedulerStore = create<MyState>()(
         date: new Date(),
         bird: names.birds.Crow,
         paksha: names.paksha.Krishnapaksha,
+        sunrise: "06:00",
+        sunset: "18:00",
+
         setDate: (date) => {
             set((state) => {
                 state.date = date;
@@ -55,6 +62,26 @@ export const useSchedulerStore = create<MyState>()(
         setBird: (b) => {
             set((state) => {
                 state.bird = BirdSchema.parse(b);
+            });
+        },
+        setSunrise: (time: string) => {
+            // Validate time format (HH:mm)
+            const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+            if (!timeRegex.test(time)) {
+                throw new Error("Invalid time format. Please use HH:mm format.");
+            }
+            set((state) => {
+                state.sunrise = time;
+            });
+        },
+        setSunset: (time: string) => {
+            // Validate time format (HH:mm)
+            const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+            if (!timeRegex.test(time)) {
+                throw new Error("Invalid time format. Please use HH:mm format.");
+            }
+            set((state) => {
+                state.sunset = time;
             });
         },
     }))
@@ -68,6 +95,8 @@ export let useBirdsInfo = () =>
             date: state.date,
             bird: state.bird,
             paksha: state.paksha,
+            sunrise: state.sunrise,
+            sunset: state.sunset,
         }))
     );
 
@@ -76,6 +105,10 @@ export const useBirdActions = () =>
         useShallow((state) => ({
             setDate: state.setDate,
             setBird: state.setBird,
+            hasHydrated: state.hasHydrated,
+            setSunrise: state.setSunrise,
+            setSunset: state.setSunset,
+            // add any other actions you need here
         }))
     );
 
