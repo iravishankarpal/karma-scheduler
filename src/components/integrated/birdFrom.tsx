@@ -12,6 +12,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { getCurrentPakshiActivity } from "@/logic/time/currentActivity";
 import BirdCurrentActivity from "./birdCurrentActivity";
+import SyncToGmail from "./syncToGmail";
 
 export default function BirdFormProvider() {
     let hasHydrated = useBirdHydration();
@@ -77,6 +78,7 @@ export function BirdForm() {
                 <label className="text-sm font-medium">Current Activity</label>
                 <BirdCurrentActivity />
             </div>
+            <SyncToGmail />
         </div>
     );
 }
