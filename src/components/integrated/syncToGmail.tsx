@@ -20,7 +20,7 @@ export default function SyncToGmail() {
     const nightTime = dayActivities.Night_time;
     const weekdays = getWeekDaysFrom(new Date(date));
     const timeSlots = getTimeDivision(sunrise, sunset);
-    let getFullActivities = (day) => {
+    const getFullActivities = (day: any) => {
         return timeSlots.fullDay.map((slot, index) => {
             const activity = index < 5 ? dayTime[day.label][index] : nightTime[day.label][index - 5];
             return {
@@ -30,9 +30,9 @@ export default function SyncToGmail() {
             };
         });
     };
-    let onClickHandler = () => {
-        let fullActivities = weekdays.flatMap(getFullActivities);
-        let dayActivities = fullActivities.reduce((acc, curr) => {
+    const onClickHandler = () => {
+        const fullActivities = weekdays.flatMap(getFullActivities);
+        const dayActivities = fullActivities.reduce((acc, curr) => {
             if (!acc[curr.day]) {
                 acc[curr.day] = [];
             }

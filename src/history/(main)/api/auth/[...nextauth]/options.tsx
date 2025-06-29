@@ -1,4 +1,3 @@
-import apiList from "@/schema/apiList";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options = {

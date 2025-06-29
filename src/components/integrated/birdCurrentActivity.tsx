@@ -3,7 +3,7 @@ import { useBirdsInfo } from "@/store/useSchedulerStore";
 import React from "react";
 
 export default function BirdCurrentActivity() {
-    const { date, bird: pakshi, paksha, sunrise, sunset } = useBirdsInfo();
+    const { bird: pakshi, paksha, sunrise, sunset } = useBirdsInfo();
 
     const CurrentActivity = getCurrentPakshiActivity({
         sunrise,
@@ -14,7 +14,7 @@ export default function BirdCurrentActivity() {
     if (!CurrentActivity) {
         return <div className="text-red-500">No activity data available for the current time.</div>;
     }
-    let { activity, from, period, to } = CurrentActivity;
+    const { activity, from, to } = CurrentActivity;
 
     return (
         <span className="flex  justify-between items-center  ">

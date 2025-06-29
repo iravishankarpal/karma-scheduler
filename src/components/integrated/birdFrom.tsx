@@ -10,12 +10,11 @@ import { useBirdActions, useBirdHydration, useBirdsInfo } from "@/store/useSched
 import { birdsArray } from "@/schema/names";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { getCurrentPakshiActivity } from "@/logic/time/currentActivity";
 import BirdCurrentActivity from "./birdCurrentActivity";
 import SyncToGmail from "./syncToGmail";
 
 export default function BirdFormProvider() {
-    let hasHydrated = useBirdHydration();
+    const hasHydrated = useBirdHydration();
     if (!hasHydrated) return null;
     return <BirdForm />;
 }

@@ -1,9 +1,9 @@
 import { z } from "zod";
 import { ActivitySchema, BirdSchema, DaySchema, NakshatraSchema } from "./names";
 
-let arrayOfBirds = z.array(BirdSchema).nonempty();
-let arrayOfDays = z.array(DaySchema).nonempty();
-let arrayOfActions = z.array(ActivitySchema).nonempty();
+const arrayOfBirds = z.array(BirdSchema).nonempty();
+const arrayOfDays = z.array(DaySchema).nonempty();
+const arrayOfActions = z.array(ActivitySchema).nonempty();
 const dayTimeSchema = z.object({
     Sunday: arrayOfActions,
     Monday: arrayOfActions,
