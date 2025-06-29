@@ -1,6 +1,6 @@
 # Karma Scheduler
 
-🌿 **[Visit App → karma-scheduler-fsstd70rc-ravis-projects-1fe52786.vercel.app](https://karma-scheduler-fsstd70rc-ravis-projects-1fe52786.vercel.app)**
+🌿 **[Visit App → https://karma-scheduler.vercel.app/](https://karma-scheduler.vercel.app/)**
 
 > **Pancha Pakshi** is a traditional South Indian astrological system that assigns each person a guiding bird—Vulture, Owl, Crow, Cock, or Peacock—based on their birth details.
 > Each bird cycles through five dynamic states (Ruling, Eating, Walking, Sleeping, Dying), determining auspicious times for actions. This system adds a cosmic rhythm to personal
