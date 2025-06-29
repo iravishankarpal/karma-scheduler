@@ -1,7 +1,10 @@
 // store/useSchedulerStore.ts
 import { create } from "zustand";
 import { useShallow } from "zustand/shallow";
-import { devtools, persist } from "zustand/middleware";
+import {
+    devtools,
+    // persist
+} from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import type { StateCreator } from "zustand";
 import type { PersistOptions } from "zustand/middleware";
@@ -31,25 +34,26 @@ type MiddlewareStack = [["zustand/immer", never], ["zustand/devtools", never], [
 const withMiddlewares = (f: StateCreator<MyState, MiddlewareStack>) =>
     devtools(
         // @ts-expect-error No overload matches this call
-        persist(immer(f), {
-            name: "scheduler", // for localStorage key
-            onRehydrateStorage: () => (state: MyState) => {
-                console.log("✅ Zustand rehydrated!", state);
-                if (state) {
-                    state.hasHydrated = true;
-                    return state;
-                }
-            },
-        })
+        // persist(immer(f), {
+        //     name: "scheduler", // for localStorage key
+        //     onRehydrateStorage: () => (state: MyState) => {
+        //         console.log("✅ Zustand rehydrated!", state);
+        //         if (state) {
+        //             state.hasHydrated = true;
+        //             return state;
+        //         }
+        //     },
+        // })
+        immer(f)
     );
 
 // ✅ Final store with typed middleware stack
 export const useSchedulerStore = create<MyState>()(
     withMiddlewares((set) => ({
-        hasHydrated: false,
+        hasHydrated: true,
         date: new Date(),
         bird: names.birds.Crow,
-        paksha: names.paksha.Krishnapaksha,
+        paksha: getPakshaStatus(new Date()),
         sunrise: "06:00",
         sunset: "18:00",
 

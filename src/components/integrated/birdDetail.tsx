@@ -8,6 +8,7 @@ import { names, tActivity } from "@/schema/names";
 import { getWeekDaysFrom } from "@/logic/time/weekdays";
 import { getTimeDivision } from "@/logic/time/timedivistion";
 import clsx from "clsx";
+import { format } from "date-fns";
 export default function BirdDetail() {
     const { bird, paksha, sunrise, sunset, date } = useBirdsInfo();
     const allData = mainDataSchema.parse(data);
@@ -23,13 +24,15 @@ export default function BirdDetail() {
     const timeSlots = getTimeDivision(sunrise, sunset);
 
     return (
-        <div className="min-h-screen/3">
+        <div className="min-h-screen/3  min-w-5/6 p-4 bg-white rounded-lg shadow-md">
             <Table>
                 <TableHeader>
                     <TableRow>
                         <TableHead>Time / Day</TableHead>
                         {weekdays.map((day) => (
-                            <TableHead key={day.label}>{day.label}</TableHead>
+                            <TableHead key={day.label}>
+                                <span className="text-xs"> {format(day.raw as Date, "EEE d LLLL")}</span>
+                            </TableHead>
                         ))}
                     </TableRow>
                 </TableHeader>

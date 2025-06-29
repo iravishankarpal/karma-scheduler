@@ -6,16 +6,21 @@ import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { useBirdActions, useBirdHydration, useBirdsInfo } from "@/store/useSchedulerStore";
+import {
+    useBirdActions,
+    //  useBirdHydration,
+    useBirdsInfo,
+} from "@/store/useSchedulerStore";
 import { birdsArray } from "@/schema/names";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import BirdCurrentActivity from "./birdCurrentActivity";
+import { ModeToggle } from "../them-swither-btn";
 // import SyncToGmail from "./syncToGmail";
 
 export default function BirdFormProvider() {
-    const hasHydrated = useBirdHydration();
-    if (!hasHydrated) return null;
+    // const hasHydrated = useBirdHydration();
+    // if (!hasHydrated) return null;
     return <BirdForm />;
 }
 
@@ -41,7 +46,6 @@ export function BirdForm() {
                     </PopoverContent>
                 </Popover>
             </div>
-
             <div className="flex flex-col space-y-2">
                 <Label htmlFor="sunrise" className="text-sm font-medium">
                     Set Sunrise
@@ -55,7 +59,6 @@ export function BirdForm() {
                 </Label>
                 <Input id="sunset" type="time" onChange={(e) => setSunset(e.target.value)} defaultValue={sunset} className="w-full" />
             </div>
-
             {/* Bird Select */}
             <div className="flex flex-col space-y-2">
                 <label className="text-sm font-medium">Select Bird</label>
@@ -72,12 +75,12 @@ export function BirdForm() {
                     </SelectContent>
                 </Select>
             </div>
-
             <div className="flex flex-col space-y-2  ">
                 <label className="text-sm font-medium">Current Activity</label>
                 <BirdCurrentActivity />
             </div>
             {/* <SyncToGmail /> */}
+            <ModeToggle />
         </div>
     );
 }

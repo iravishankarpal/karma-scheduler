@@ -6,7 +6,7 @@ export const metadata = {
 };
 export default function Home() {
     return (
-        <div className="h-screen flex items-center justify-center">
+        <div className="h-screen  flex items-center justify-center ">
             <div>
                 <h1 className="text-2xl font-bold mb-4 text-center">Pakshi Activity Tracker</h1>
 
