@@ -34,6 +34,6 @@ describe("getMoonLongitude", () => {
 
 function getMoonLongitudeTimeDAte(date: Date): number {
     const iso = date.toISOString().split("T")[0];
-    // @ts-ignore
+    // @ts-expect-error TypeScript does not know about this object
     return moonLongitudesJune2025[iso] ?? -1; // -1 for unknown
 }
