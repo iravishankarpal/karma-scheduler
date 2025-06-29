@@ -1,6 +1,9 @@
 import BirdDetail from "@/components/integrated/birdDetail";
 import BirdForm from "@/components/integrated/birdFrom";
-
+export const metadata = {
+    title: "Pakshi Activity Tracker",
+    description: "Track the daily activities of birds based on their sunrise and sunset times.",
+};
 export default function Home() {
     return (
         <div className="h-screen flex items-center justify-center">

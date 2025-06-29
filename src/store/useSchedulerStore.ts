@@ -30,7 +30,7 @@ type MiddlewareStack = [["zustand/immer", never], ["zustand/devtools", never], [
 // 🧩 Step 2: Typed custom middleware
 const withMiddlewares = (f: StateCreator<MyState, MiddlewareStack>) =>
     devtools(
-        // @ts-expect-error
+        // @ts-expect-error No overload matches this call
         persist(immer(f), {
             name: "scheduler", // for localStorage key
             onRehydrateStorage: () => (state: MyState) => {
@@ -89,7 +89,7 @@ export const useSchedulerStore = create<MyState>()(
 
 export default useSchedulerStore;
 
-export let useBirdsInfo = () =>
+export const useBirdsInfo = () =>
     useSchedulerStore(
         useShallow((state) => ({
             date: state.date,

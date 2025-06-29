@@ -5,7 +5,7 @@ import { names } from "@/schema/names";
 describe("Weekdays", () => {
     it("should return the correct weekday for a given date", () => {
         const date = new Date("2024-06-22"); // A Sunday
-        let weekday = getWeekDaysFrom(date);
+        const weekday = getWeekDaysFrom(date);
         expect(weekday[0].label).toBe(names.weekdays.Saturday);
         expect(weekday[0].short).toBe("Sat");
         expect(weekday[0].date).toBe("2024-06-22");

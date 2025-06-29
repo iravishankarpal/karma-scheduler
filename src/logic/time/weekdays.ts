@@ -1,7 +1,7 @@
 import { DaySchema } from "@/schema/names";
 import { format, addDays } from "date-fns";
 import { z } from "zod";
-let nextDates = z.array(
+const nextDates = z.array(
     z.object({
         label: DaySchema,
         short: z.string(),
@@ -10,8 +10,8 @@ let nextDates = z.array(
     })
 );
 export function getWeekDaysFrom(date: Date) {
-    let parsed = z.date().parse(date);
-    let nextDate = Array.from({ length: 7 }, (_, i) => {
+    const parsed = z.date().parse(date);
+    const nextDate = Array.from({ length: 7 }, (_, i) => {
         const current = addDays(parsed, i); // Adjusted to start from the previous day
         return {
             label: format(current, "EEEE"), // "Monday"

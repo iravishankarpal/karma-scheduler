@@ -11,7 +11,7 @@ import { birdsArray } from "@/schema/names";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import BirdCurrentActivity from "./birdCurrentActivity";
-import SyncToGmail from "./syncToGmail";
+// import SyncToGmail from "./syncToGmail";
 
 export default function BirdFormProvider() {
     const hasHydrated = useBirdHydration();
@@ -77,7 +77,7 @@ export function BirdForm() {
                 <label className="text-sm font-medium">Current Activity</label>
                 <BirdCurrentActivity />
             </div>
-            <SyncToGmail />
+            {/* <SyncToGmail /> */}
         </div>
     );
 }

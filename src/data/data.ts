@@ -1,4 +1,4 @@
-let data = {
+const data = {
     Birth_Nakshatra: [
         { Nakshatra: "Aswini", Suklapaksha: "Vulture", Krishnapaksha: "Peacock" },
         { Nakshatra: "Bharani", Suklapaksha: "Vulture", Krishnapaksha: "Peacock" },
