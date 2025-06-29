@@ -1,6 +1,5 @@
 import BirdDetail from "@/components/integrated/birdDetail";
 import BirdForm from "@/components/integrated/birdFrom";
-import SyncToGmail from "@/components/integrated/syncToGmail";
 
 export default function Home() {
     return (
@@ -11,7 +10,6 @@ export default function Home() {
                 <p className="text-center mb-6">Track the daily activities of birds based on their sunrise and sunset times.</p>
                 <BirdForm />
                 <BirdDetail />
-                <SyncToGmail />
             </div>
         </div>
     );
