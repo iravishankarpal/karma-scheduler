@@ -46,39 +46,37 @@ export async function GET(request: Request) {
     if (!anyInfo || anyInfo.length === 0) {
         return new Response("No data found for the specified parameters.", { status: 404 });
     }
-    console.log('day :', day);
+    console.log("day :", day);
     const sunrise = getSunriseTime(day, lat, lon);
-    console.log('sunrise :', sunrise);
+    console.log("sunrise :", sunrise);
     const sunset = getSunsetTime(day, lat, lon);
-    console.log('sunset :', sunset);
-
+    console.log("sunset :", sunset);
 
     const sunriseStr = sunrise.toLocaleTimeString("en-IN", {
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: true,
-  timeZone: "Asia/Kolkata",
-});
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+    });
 
-const sunsetStr = sunset.toLocaleTimeString("en-IN", {
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: true,
-  timeZone: "Asia/Kolkata",
-});
+    const sunsetStr = sunset.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+    });
 
-const convertTo24Hr = (str : string) => {
-  const [time, period] = str.split(" ");
-  let [hours, minutes] = time.split(":").map(Number);
-  if (period === "PM" && hours !== 12) hours += 12;
-  if (period === "AM" && hours === 12) hours = 0;
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-};
+    const convertTo24Hr = (str: string) => {
+        const [time, period] = str.split(" ");
+        const Num = time.split(":").map(Number);
+        const minutes = Num[1];
+        let hours = Num[0];
+        if (period === "PM" && hours !== 12) hours += 12;
+        if (period === "AM" && hours === 12) hours = 0;
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    };
 
-const timeDivision = getTimeDivision(
-  convertTo24Hr(sunriseStr),
-  convertTo24Hr(sunsetStr)
-);
+    const timeDivision = getTimeDivision(convertTo24Hr(sunriseStr), convertTo24Hr(sunsetStr));
 
     if (!timeDivision) {
         return new Response("Error calculating time divisions.", { status: 500 });
@@ -87,7 +85,7 @@ const timeDivision = getTimeDivision(
     const fullDay = timeDivision.fullDay.map((slot, index) => ({
         startTime: slot.startTime,
         endTime: slot.endTime,
-        
+
         Event: anyInfo[index] || "No Activity",
     }));
 
