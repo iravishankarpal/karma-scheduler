@@ -3,6 +3,7 @@ import ipInfo from "@/lib/axios/ipinfo";
 import { getTimeDivision } from "@/logic/time/timedivistion";
 import { tDay, BirdSchema, DaySchema } from "@/schema/names";
 import { getPakshaStatus, getSunriseTime, getSunsetTime } from "@/services/suncalc";
+import { format, parse } from "date-fns";
 
 export const dynamic = "force-dynamic"; // This ensures the route is always fresh and not cached
 
@@ -30,7 +31,7 @@ export async function GET(request: Request) {
     //     return new Response("Latitude and Longitude are required.", { status: 400 });
     // }
 
-    const day = new Date(date);
+    const day = new Date(date || new Date().toISOString());
     const paksha = getPakshaStatus(day);
     const weekday = day.toLocaleString("en-US", { weekday: "long" });
 
@@ -46,11 +47,8 @@ export async function GET(request: Request) {
     if (!anyInfo || anyInfo.length === 0) {
         return new Response("No data found for the specified parameters.", { status: 404 });
     }
-    console.log("day :", day);
     const sunrise = getSunriseTime(day, lat, lon);
-    console.log("sunrise :", sunrise);
     const sunset = getSunsetTime(day, lat, lon);
-    console.log("sunset :", sunset);
 
     const sunriseStr = sunrise.toLocaleTimeString("en-IN", {
         hour: "2-digit",
@@ -65,29 +63,51 @@ export async function GET(request: Request) {
         hour12: true,
         timeZone: "Asia/Kolkata",
     });
+    console.table({ sunrise, sunset, sunriseStr, sunsetStr, day: day.toDateString(), lat, lon });
 
     const convertTo24Hr = (str: string) => {
-        const [time, period] = str.split(" ");
-        const Num = time.split(":").map(Number);
-        const minutes = Num[1];
-        let hours = Num[0];
-        if (period === "PM" && hours !== 12) hours += 12;
-        if (period === "AM" && hours === 12) hours = 0;
-        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+        const parsed = parse(str, "hh:mm a", new Date());
+        return format(parsed, "HH:mm");
     };
 
-    const timeDivision = getTimeDivision(convertTo24Hr(sunriseStr), convertTo24Hr(sunsetStr));
+    const timeDivision = getTimeDivision(convertTo24Hr(sunriseStr), convertTo24Hr(sunsetStr), day);
 
     if (!timeDivision) {
         return new Response("Error calculating time divisions.", { status: 500 });
     }
 
-    const fullDay = timeDivision.fullDay.map((slot, index) => ({
-        startTime: slot.startTime,
-        endTime: slot.endTime,
+    const fullDay = timeDivision.fullDay.map((slot, index) => {
+        const isEarlyAM = parse(slot.start, "HH:mm", new Date()).getHours() < 4;
+        const slotDate = new Date(day);
+        if (isEarlyAM) slotDate.setDate(slotDate.getDate() + 1);
 
-        Event: anyInfo[index] || "No Activity",
-    }));
+        const startDateTime = parse(
+            `${format(slotDate, "yyyy-MM-dd")} ${slot.start}`,
+            "yyyy-MM-dd HH:mm",
+            new Date()
+        );
+        const endDateTime = parse(
+            `${format(slotDate, "yyyy-MM-dd")} ${slot.end}`,
+            "yyyy-MM-dd HH:mm",
+            new Date()
+        );
+
+        // handle edge case: end time is AM and earlier than start (means next day)
+        if (endDateTime < startDateTime) {
+            endDateTime.setDate(endDateTime.getDate() + 1);
+        }
+
+        return {
+            startTime: slot.startTime,
+            endTime: slot.endTime,
+            // start: slot.start,
+            // end: slot.end,
+            date: format(slotDate, "yyyy-MM-dd"),
+            // startDateTime: startDateTime.toISOString(),
+            // endDateTime: endDateTime.toISOString(),
+            Event: anyInfo[index] || "No Activity",
+        };
+    });
 
     return new Response(JSON.stringify(fullDay), {
         headers: { "Content-Type": "application/json" },
