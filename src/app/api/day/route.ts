@@ -13,13 +13,12 @@ export async function GET(request: Request) {
     const date = searchParams.get("date") || new Date().toISOString();
     const bird = searchParams.get("bird") || "Crow";
 
-    let lat = parseFloat(searchParams.get("lat") || "0");
-    let lon = parseFloat(searchParams.get("lon") || "0");
+    let lat = parseFloat(searchParams.get("lat") || "19.2000");
+    let lon = parseFloat(searchParams.get("lon") || "73.1667");
 
     const forwarded = request.headers.get("x-forwarded-for");
     const ip = forwarded?.split(",")[0] || ""; // empty means "auto detect"
     console.log("ip :", ip);
-
     if (ip && ip !== "::1") {
         const response = await ipInfo.get(`/${ip}`);
         const { loc } = response.data;
@@ -47,11 +46,39 @@ export async function GET(request: Request) {
     if (!anyInfo || anyInfo.length === 0) {
         return new Response("No data found for the specified parameters.", { status: 404 });
     }
-
+    console.log('day :', day);
     const sunrise = getSunriseTime(day, lat, lon);
+    console.log('sunrise :', sunrise);
     const sunset = getSunsetTime(day, lat, lon);
+    console.log('sunset :', sunset);
 
-    const timeDivision = getTimeDivision(sunrise.toISOString().substring(11, 16), sunset.toISOString().substring(11, 16));
+
+    const sunriseStr = sunrise.toLocaleTimeString("en-IN", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+  timeZone: "Asia/Kolkata",
+});
+
+const sunsetStr = sunset.toLocaleTimeString("en-IN", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: true,
+  timeZone: "Asia/Kolkata",
+});
+
+const convertTo24Hr = (str : string) => {
+  const [time, period] = str.split(" ");
+  let [hours, minutes] = time.split(":").map(Number);
+  if (period === "PM" && hours !== 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
+const timeDivision = getTimeDivision(
+  convertTo24Hr(sunriseStr),
+  convertTo24Hr(sunsetStr)
+);
 
     if (!timeDivision) {
         return new Response("Error calculating time divisions.", { status: 500 });
@@ -60,6 +87,7 @@ export async function GET(request: Request) {
     const fullDay = timeDivision.fullDay.map((slot, index) => ({
         startTime: slot.startTime,
         endTime: slot.endTime,
+        
         Event: anyInfo[index] || "No Activity",
     }));
 

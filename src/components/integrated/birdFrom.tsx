@@ -4,7 +4,13 @@ import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
+import {
+    Select,
+    SelectTrigger,
+    SelectContent,
+    SelectItem,
+    SelectValue,
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import {
     useBirdActions,
@@ -14,7 +20,7 @@ import {
 import { birdsArray } from "@/schema/names";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import BirdCurrentActivity from "./birdCurrentActivity";
+// import BirdCurrentActivity from "./birdCurrentActivity";
 import { ModeToggle } from "../them-swither-btn";
 // import SyncToGmail from "./syncToGmail";
 
@@ -50,14 +56,26 @@ export function BirdForm() {
                 <Label htmlFor="sunrise" className="text-sm font-medium">
                     Set Sunrise
                 </Label>
-                <Input id="sunrise" onChange={(e) => setSunrise(e.target.value)} type="time" defaultValue={sunrise} className="w-full" />
+                <Input
+                    id="sunrise"
+                    onChange={(e) => setSunrise(e.target.value)}
+                    type="time"
+                    defaultValue={sunrise}
+                    className="w-full"
+                />
             </div>
             {/* Sunset */}
             <div className="flex flex-col space-y-2">
                 <Label htmlFor="sunset" className="text-sm font-medium">
                     Set Sunset
                 </Label>
-                <Input id="sunset" type="time" onChange={(e) => setSunset(e.target.value)} defaultValue={sunset} className="w-full" />
+                <Input
+                    id="sunset"
+                    type="time"
+                    onChange={(e) => setSunset(e.target.value)}
+                    defaultValue={sunset}
+                    className="w-full"
+                />
             </div>
             {/* Bird Select */}
             <div className="flex flex-col space-y-2">
@@ -75,10 +93,10 @@ export function BirdForm() {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="flex flex-col space-y-2  ">
+            {/* <div className="flex flex-col space-y-2  ">
                 <label className="text-sm font-medium">Current Activity</label>
                 <BirdCurrentActivity />
-            </div>
+            </div> */}
             {/* <SyncToGmail /> */}
             <ModeToggle />
         </div>
