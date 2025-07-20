@@ -34,7 +34,40 @@
         "Uttarabhadra",
         "Uttaraphalguni",
         "Uttarashada",
-        "Vishakha"
+        "Vishakha",
+        "autoincrement",
+        "clsx",
+        "immer",
+        "next",
+        "prisma",
+        "prisma-client-js",
+        "prisma+mysql",
+        "prisma+postgres",
+        "react",
+        "scss"
     ],
-    "fetch-client.workspacePath": "c:\\Users\\iravi\\OneDrive\\Desktop\\project\\karma-scheduler\\fetch-client"
+    "fetch-client.workspacePath": "c:\\Users\\iravi\\OneDrive\\Desktop\\project\\karma-scheduler\\fetch-client",
+
+    "cSpell.language": "en",
+    "cSpell.ignorePaths": [
+        "package-lock.json",
+        "pnpm-lock.yaml",
+        "yarn.lock",
+        "package.json",
+        "node_modules",
+        "vscode-extension",
+        "dist",
+        "build",
+        "coverage",
+        "out",
+        "lib",
+        "tmp",
+        "temp",
+        "logs",
+        "**.db",
+        ".git/{info,lfs,logs,refs,objects}/**",
+        ".git/{index,*refs,*HEAD}",
+        ".vscode",
+        ".vscode-insiders"
+    ]
 }

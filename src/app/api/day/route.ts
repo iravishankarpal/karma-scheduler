@@ -4,6 +4,10 @@ import { getTimeDivision } from "@/logic/time/timedivistion";
 import { tDay, BirdSchema, DaySchema } from "@/schema/names";
 import { getPakshaStatus, getSunriseTime, getSunsetTime } from "@/services/suncalc";
 
+export const dynamic = "force-dynamic"; // This ensures the route is always fresh and not cached
+
+export const revalidate = 0; // Disable revalidation for this route
+
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const date = searchParams.get("date") || new Date().toISOString();
@@ -18,7 +22,7 @@ export async function GET(request: Request) {
 
     if (ip && ip !== "::1") {
         const response = await ipInfo.get(`/${ip}`);
-        const { city, region, country, loc } = response.data;
+        const { loc } = response.data;
         console.log("response.data :", response.data);
         lat = parseFloat(loc?.split(",")[0]);
         lon = parseFloat(loc?.split(",")[1]);
