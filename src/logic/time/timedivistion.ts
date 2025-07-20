@@ -1,7 +1,6 @@
 import { format, parse, differenceInMinutes, addMinutes } from "date-fns";
 
-export function getTimeDivision(sunrise: string, sunset: string, date: Date) {
-    const today = date || new Date();
+export function getTimeDivision(sunrise: string, sunset: string, today: Date = new Date()) {
     const sunriseTime = parse(sunrise, "HH:mm", today);
     const sunsetTime = parse(sunset, "HH:mm", today);
 
