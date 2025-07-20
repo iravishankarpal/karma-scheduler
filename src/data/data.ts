@@ -1,3 +1,5 @@
+import { tDay } from "@/schema/names";
+
 const data = {
     Birth_Nakshatra: [
         { Nakshatra: "Aswini", Suklapaksha: "Vulture", Krishnapaksha: "Peacock" },
@@ -295,6 +297,9 @@ const data = {
                     Friday: ["Walk", "Sleep", "Eat", "Rule", "Death"],
                     Saturday: ["Sleep", "Eat", "Rule", "Death", "Walk"],
                 },
+                day(day: tDay) {
+                    return this.Day_time[day].concat(this.Night_time[day]);
+                },
             },
             Krishnapaksha: {
                 Day_time: {
@@ -314,6 +319,9 @@ const data = {
                     Thursday: ["Eat", "Sleep", "Walk", "Death", "Rule"],
                     Friday: ["Walk", "Death", "Rule", "Eat", "Sleep"],
                     Saturday: ["Sleep", "Walk", "Death", "Rule", "Eat"],
+                },
+                day(day: tDay) {
+                    return this.Day_time[day].concat(this.Night_time[day]);
                 },
             },
         },

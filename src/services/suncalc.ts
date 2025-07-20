@@ -24,3 +24,11 @@ export function getPakshaStatus(date: Date): tPakshaStatus {
     if (phaseData === "Waxing") return names.paksha.Suklapaksha;
     else return names.paksha.Krishnapaksha;
 }
+export function getSunriseTime(date: Date, lat: number, lon: number): Date {
+    const times = SunCalc.getTimes(date, lat, lon);
+    return times.sunrise;
+}
+export function getSunsetTime(date: Date, lat: number, lon: number): Date {
+    const times = SunCalc.getTimes(date, lat, lon);
+    return times.sunset;
+}
