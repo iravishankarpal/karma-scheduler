@@ -1,4 +1,4 @@
-import { syncToCalendar } from "@/controller/syncToCalender";
+import { syncToCalendar, tDayActivities } from "@/controller/syncToCalender";
 import data from "@/data/data";
 // import ipInfo from "@/lib/axios/ipinfo";
 import { getTimeDivisionsISO } from "@/logic/time/timedivistion";
@@ -57,26 +57,25 @@ export async function GET() {
                 Event: anyInfo[index] || "No Activity",
             };
         });
-        let temp = {
+        const temp = {
             date: format(day, "yyyy-MM-dd"),
             bird: birdParsed,
             paksha,
             weekday: parsedDay,
             sunriseStr,
             sunsetStr,
-            fullDay: fullDay,
+            fullDay: fullDay as tDayActivities,
         };
         return temp;
     };
     console.clear();
     const temp = Array.from({ length: totalDaysInMonth }, (_, index) => {
         const day = new Date(date.getFullYear(), month, index + 1);
-        console.log("day :", day);
         return getWholeMonthInfo(day as unknown as string);
     });
-    // for (const dayInfo of temp) {
-    // await syncToCalendar(dayInfo?.fullDay);
-    // }
+    for (const dayInfo of temp) {
+        await syncToCalendar(dayInfo?.fullDay);
+    }
     return new Response(JSON.stringify(temp), {
         headers: { "Content-Type": "application/json" },
         status: 200,
