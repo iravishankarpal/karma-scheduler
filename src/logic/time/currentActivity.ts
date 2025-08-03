@@ -34,12 +34,20 @@ export function getCurrentPakshiActivity({
     const isDay = isAfter(dateTime, sunriseTime) && isBefore(dateTime, sunsetTime);
     const slots = isDay ? activities.Day_time : activities.Night_time;
 
-    const totalMinutes = differenceInMinutes(isDay ? sunsetTime : addMinutes(sunsetTime, differenceInMinutes(sunsetTime, sunriseTime)), isDay ? sunriseTime : sunsetTime);
+    const totalMinutes = differenceInMinutes(
+        isDay ? sunsetTime : addMinutes(sunsetTime, differenceInMinutes(sunsetTime, sunriseTime)),
+        isDay ? sunriseTime : sunsetTime
+    );
     const slotMinutes = Math.floor(totalMinutes / 5);
 
     for (let i = 0; i < 5; i++) {
         const start = addMinutes(isDay ? sunriseTime : sunsetTime, i * slotMinutes);
-        const end = i === 4 ? (isDay ? sunsetTime : addMinutes(sunsetTime, totalMinutes)) : addMinutes(isDay ? sunriseTime : sunsetTime, (i + 1) * slotMinutes);
+        const end =
+            i === 4
+                ? isDay
+                    ? sunsetTime
+                    : addMinutes(sunsetTime, totalMinutes)
+                : addMinutes(isDay ? sunriseTime : sunsetTime, (i + 1) * slotMinutes);
 
         if (isAfter(dateTime, start) && isBefore(dateTime, end)) {
             return {

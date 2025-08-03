@@ -3,7 +3,14 @@ import data from "@/data/data";
 import { mainDataSchema } from "@/schema/data";
 import { useBirdsInfo } from "@/store/useSchedulerStore";
 import React from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table";
 import { names, tActivity } from "@/schema/names";
 import { getWeekDaysFrom } from "@/logic/time/weekdays";
 import { getTimeDivision } from "@/logic/time/timedivistion";
@@ -31,7 +38,10 @@ export default function BirdDetail() {
                         <TableHead>Time / Day</TableHead>
                         {weekdays.map((day) => (
                             <TableHead key={day.label}>
-                                <span className="text-xs"> {format(day.raw as Date, "EEE d LLLL")}</span>
+                                <span className="text-xs">
+                                    {" "}
+                                    {format(day.raw as Date, "EEE d LLLL")}
+                                </span>
                             </TableHead>
                         ))}
                     </TableRow>
@@ -41,7 +51,10 @@ export default function BirdDetail() {
                         <TableRow key={index}>
                             <TableCell>{`${slot.startTime} - ${slot.endTime}`}</TableCell>
                             {weekdays.map((day) => {
-                                const activity = index < 5 ? dayTime[day.label][index] : nightTime[day.label][index - 5];
+                                const activity =
+                                    index < 5
+                                        ? dayTime[day.label][index]
+                                        : nightTime[day.label][index - 5];
                                 return (
                                     <TableCell key={day.label}>
                                         <ActivityColor activity={activity} />

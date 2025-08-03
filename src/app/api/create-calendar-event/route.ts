@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { google } from "googleapis";
 import { promises as fs } from "fs";
 import path from "path";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
     try {
         console.clear();
 
@@ -38,12 +38,11 @@ export async function GET(req: NextRequest) {
             },
             colorId: "5",
         };
-        let calendarId =
+        const calendarId =
             "43a90012acaf3c24f87c10dcbae07df67f79f4e63fcc2d7bc2fb7cac47983684@group.calendar.google.com";
         const calendar = google.calendar({ version: "v3", auth });
         const response = await calendar.events.insert({
-            calendarId:
-                "43a90012acaf3c24f87c10dcbae07df67f79f4e63fcc2d7bc2fb7cac47983684@group.calendar.google.com",
+            calendarId: calendarId,
             requestBody: event,
         });
 

@@ -10,10 +10,10 @@
 
 ## Features
 
--   ✅ Calculate your **Pakshi bird** and its current state
--   ✅ See auspicious and inauspicious times for activities
--   ✅ Clean, modern UI
--   ✅ Built with **Next.js** and hosted on Vercel
+- ✅ Calculate your **Pakshi bird** and its current state
+- ✅ See auspicious and inauspicious times for activities
+- ✅ Clean, modern UI
+- ✅ Built with **Next.js** and hosted on Vercel
 
 ## Getting Started
 
@@ -26,6 +26,6 @@ npm run dev
 
 ## Tech Stack
 
--   Next.js
--   React
--   Vercel
+- Next.js
+- React
+- Vercel

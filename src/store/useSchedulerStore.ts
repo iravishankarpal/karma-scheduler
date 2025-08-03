@@ -26,7 +26,11 @@ interface State {
 
 // 🧠 Step 1: type for middleware combo
 type MyState = State;
-type MiddlewareStack = [["zustand/immer", never], ["zustand/devtools", never], ["zustand/persist", Partial<PersistOptions<MyState>>]];
+type MiddlewareStack = [
+    ["zustand/immer", never],
+    ["zustand/devtools", never],
+    ["zustand/persist", Partial<PersistOptions<MyState>>],
+];
 
 // type MiddlewareStack = [["zustand/immer", never], ["zustand/devtools", Partial<MyState>]];
 

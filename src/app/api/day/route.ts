@@ -1,10 +1,10 @@
 import data from "@/data/data";
 // import ipInfo from "@/lib/axios/ipinfo";
-import { getTimeDivision, getTimeDivisionsISO } from "@/logic/time/timedivistion";
+import { getTimeDivisionsISO } from "@/logic/time/timedivistion";
 import { tDay, BirdSchema, DaySchema, tPakshaStatus, tBird } from "@/schema/names";
 import { getPakshaStatus, getSunriseTime, getSunsetTime } from "@/services/suncalc";
 import { format, parse } from "date-fns";
-import { daySchema, syncToCalendar, tDayActivities } from "./syncToCalender";
+import { tDayActivities } from "./syncToCalender";
 
 export const dynamic = "force-dynamic"; // This ensures the route is always fresh and not cached
 
@@ -24,14 +24,14 @@ export async function getFullDayActivityController(request: Request): Promise<{
     weekday: tDay;
     sunriseStr: string;
     sunsetStr: string;
-    fullDay: any[];
+    fullDay: tDayActivities;
 }> {
     const { searchParams } = new URL(request.url);
     const date = searchParams.get("date") || new Date().toISOString();
     const bird = searchParams.get("bird") || "Crow";
 
-    let lat = parseFloat(searchParams.get("lat") || "19.2000");
-    let lon = parseFloat(searchParams.get("lon") || "73.1667");
+    const lat = parseFloat(searchParams.get("lat") || "19.2000");
+    const lon = parseFloat(searchParams.get("lon") || "73.1667");
 
     // const forwarded = request.headers.get("x-forwarded-for");
     // const ip = forwarded?.split(",")[0] || ""; // empty means "auto detect"
@@ -110,6 +110,6 @@ export async function getFullDayActivityController(request: Request): Promise<{
         weekday: parsedDay,
         sunriseStr,
         sunsetStr,
-        fullDay: fullDay,
+        fullDay: fullDay as tDayActivities,
     };
 }

@@ -1,4 +1,4 @@
-import { daySchema, syncToCalendar } from "../syncToCalender";
+import { syncToCalendar } from "../syncToCalender";
 import { getFullDayActivityController } from "../route";
 
 export const dynamic = "force-dynamic";

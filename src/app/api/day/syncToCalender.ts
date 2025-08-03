@@ -2,18 +2,11 @@ import { google } from "googleapis";
 import { promises as fs } from "fs";
 import path from "path";
 import { z } from "zod";
-import { parse, format } from "date-fns";
 import { getColorIdForActivity } from "@/data/main";
 import { ActivitySchema } from "@/schema/names";
 
-let calendarId =
+const calendarId =
     "43a90012acaf3c24f87c10dcbae07df67f79f4e63fcc2d7bc2fb7cac47983684@group.calendar.google.com";
-function toISTDateTime(dateStr: string, timeStr: string) {
-    // Combine date and time, e.g., "2025-08-03 06:15 AM"
-    const parsed = parse(`${dateStr} ${timeStr}`, "yyyy-MM-dd hh:mm a", new Date());
-    // Format to "2025-08-03T06:15:00+05:30"
-    return format(parsed, "yyyy-MM-dd'T'HH:mm:ssxxx");
-}
 
 export const daySchema = z.array(
     z.object({
@@ -61,8 +54,8 @@ export async function syncToCalendar(DayActivities: tDayActivities) {
             });
         }
         return "Activities synced to calendar successfully.";
-    } catch (error: Error | any) {
+    } catch (error: Error | unknown) {
         console.error(error);
-        throw new Error("Failed to sync to calendar: " + error.message);
+        throw new Error("Failed to sync to calendar: " + (error as Error).message);
     }
 }

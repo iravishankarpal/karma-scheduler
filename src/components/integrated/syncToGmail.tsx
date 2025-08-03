@@ -53,7 +53,8 @@ export default function SyncToGmail() {
                 className="mt-4"
                 //  onClick={onClickHandler}
                 size={"sm"}
-                variant={"outline"}>
+                variant={"outline"}
+            >
                 Sync to google calendar
             </Button>
         </div>

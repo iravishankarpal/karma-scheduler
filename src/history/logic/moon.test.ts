@@ -27,7 +27,9 @@ describe("getMoonLongitude", () => {
             const date = new Date(`${dates[i]}T00:00:00+05:30`);
             const deg = getMoonLongitude(date);
             const realDeg = getMoonLongitudeTimeDAte(date);
-            console.log(`| ${dates[i]} | ${realDeg.toFixed(2).padStart(14)}° | ${deg.toFixed(2).padStart(14)}°  |`);
+            console.log(
+                `| ${dates[i]} | ${realDeg.toFixed(2).padStart(14)}° | ${deg.toFixed(2).padStart(14)}°  |`
+            );
         }
     });
 });

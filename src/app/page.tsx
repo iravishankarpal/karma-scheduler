@@ -10,7 +10,9 @@ export default function Home() {
             <div>
                 <h1 className="text-2xl font-bold mb-4 text-center">Pakshi Activity Tracker</h1>
 
-                <p className="text-center mb-6">Track the daily activities of birds based on their sunrise and sunset times.</p>
+                <p className="text-center mb-6">
+                    Track the daily activities of birds based on their sunrise and sunset times.
+                </p>
                 <BirdForm />
                 <BirdDetail />
             </div>

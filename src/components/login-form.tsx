@@ -36,17 +36,27 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                                 </Button>
                             </div>
                             <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                                <span className="bg-card text-muted-foreground relative z-10 px-2">Or continue with</span>
+                                <span className="bg-card text-muted-foreground relative z-10 px-2">
+                                    Or continue with
+                                </span>
                             </div>
                             <div className="grid gap-6">
                                 <div className="grid gap-3">
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" type="email" placeholder="m@example.com" required />
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        placeholder="m@example.com"
+                                        required
+                                    />
                                 </div>
                                 <div className="grid gap-3">
                                     <div className="flex items-center">
                                         <Label htmlFor="password">Password</Label>
-                                        <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
+                                        <a
+                                            href="#"
+                                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                                        >
                                             Forgot your password?
                                         </a>
                                     </div>
@@ -67,7 +77,8 @@ export function LoginForm({ className, ...props }: React.ComponentProps<"div">) 
                 </CardContent>
             </Card>
             <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-                By clicking continue, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                By clicking continue, you agree to our <a href="#">Terms of Service</a> and{" "}
+                <a href="#">Privacy Policy</a>.
             </div>
         </div>
     );
