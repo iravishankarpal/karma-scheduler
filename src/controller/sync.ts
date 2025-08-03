@@ -1,0 +1,104 @@
+import data from "@/data/data";
+// import ipInfo from "@/lib/axios/ipinfo";
+import { getTimeDivisionsISO } from "@/logic/time/timedivistion";
+import { tDay, BirdSchema, DaySchema, tPakshaStatus, tBird } from "@/schema/names";
+import { getPakshaStatus, getSunriseTime, getSunsetTime } from "@/services/suncalc";
+import { format, parse } from "date-fns";
+import { tDayActivities } from "./syncToCalender";
+
+export async function getFullDayActivityController(request: Request): Promise<{
+    date: string;
+    bird: tBird;
+    paksha: tPakshaStatus;
+    weekday: tDay;
+    sunriseStr: string;
+    sunsetStr: string;
+    fullDay: tDayActivities;
+}> {
+    const { searchParams } = new URL(request.url);
+    const date = searchParams.get("date") || new Date().toISOString();
+    const bird = searchParams.get("bird") || "Crow";
+
+    const lat = parseFloat(searchParams.get("lat") || "19.2000");
+    const lon = parseFloat(searchParams.get("lon") || "73.1667");
+
+    // const forwarded = request.headers.get("x-forwarded-for");
+    // const ip = forwarded?.split(",")[0] || ""; // empty means "auto detect"
+    // if (ip && ip !== "::1") {
+    //     const response = await ipInfo.get(`/${ip}`);
+    //     const { loc } = response.data;
+    //     console.log("response.data :", response.data);
+    //     lat = parseFloat(loc?.split(",")[0]);
+    //     lon = parseFloat(loc?.split(",")[1]);
+    // }
+    // if (!lat || !lon) {
+    //     return new Response("Latitude and Longitude are required.", { status: 400 });
+    // }
+
+    const day = new Date(date || new Date().toISOString());
+    const paksha = getPakshaStatus(day);
+    const weekday = day.toLocaleString("en-US", { weekday: "long" });
+
+    const parsedDay = DaySchema.parse(weekday);
+    const birdParsed = BirdSchema.parse(bird);
+
+    const info = data.Pakshi_Daily_Activity[birdParsed][paksha];
+    const getDayInfo = (day: tDay) => {
+        return info.Day_time[day].concat(info.Night_time[day]);
+    };
+
+    const anyInfo = getDayInfo(parsedDay);
+    // if (!anyInfo || anyInfo.length === 0) {
+    //     return new Response("No data found for the specified parameters.", { status: 404 });
+    // }
+    const sunrise = getSunriseTime(day, lat, lon);
+    const sunset = getSunsetTime(day, lat, lon);
+
+    const sunriseStr = sunrise.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+    });
+
+    const sunsetStr = sunset.toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "Asia/Kolkata",
+    });
+    // console.table({ sunrise, sunset, sunriseStr, sunsetStr, day: day.toDateString(), lat, lon });
+
+    const convertTo24Hr = (str: string) => {
+        const parsed = parse(str, "hh:mm a", new Date());
+        return format(parsed, "HH:mm");
+    };
+
+    const timeDivision = getTimeDivisionsISO(
+        convertTo24Hr(sunriseStr),
+        convertTo24Hr(sunsetStr),
+        day
+    );
+    // console.log("timeDivision :", timeDivision);
+
+    // if (!timeDivision) {
+    //     return new Response("Error calculating time divisions.", { status: 500 });
+    // }
+
+    const fullDay = timeDivision.map((slot, index) => {
+        return {
+            startDateTime: format(new Date(slot.startDateTime), "yyyy-MM-dd'T'HH:mm:ss"),
+            endDateTime: format(new Date(slot.endDateTime), "yyyy-MM-dd'T'HH:mm:ss"),
+            Event: anyInfo[index] || "No Activity",
+        };
+    });
+    return {
+        date: format(day, "yyyy-MM-dd"),
+        bird: birdParsed,
+        paksha,
+        weekday: parsedDay,
+        sunriseStr,
+        sunsetStr,
+        fullDay: fullDay as tDayActivities,
+    };
+}

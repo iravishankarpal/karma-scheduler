@@ -1,5 +1,5 @@
-import { syncToCalendar } from "../syncToCalender";
-import { getFullDayActivityController } from "../route";
+import { getFullDayActivityController } from "@/controller/sync";
+import { syncToCalendar } from "@/controller/syncToCalender";
 
 export const dynamic = "force-dynamic";
 
