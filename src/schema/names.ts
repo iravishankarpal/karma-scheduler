@@ -3,7 +3,15 @@ export const birdsArray = ["Crow", "Vulture", "Owl", "Peacock", "Cock"] as const
 export const BirdSchema = z.enum(birdsArray);
 export type tBird = z.infer<typeof BirdSchema>;
 
-export const daysArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"] as const;
+export const daysArray = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+] as const;
 export const DaySchema = z.enum(daysArray);
 export type tDay = z.infer<typeof DaySchema>;
 
